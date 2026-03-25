@@ -60,6 +60,7 @@ body {
   display: flex;
   align-items: baseline;
   gap: 16px;
+  flex-wrap: wrap;
 }
 .header h1 {
   font-family: Georgia, serif;
@@ -197,8 +198,59 @@ body {
 .chart-full {
   width: 100%;
 }
+
 @media (max-width: 900px) {
-  .top-panels { grid-template-columns: 1fr; }
+  .top-panels {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .top-panels > div {
+    min-height: unset;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 16px;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .header h1 {
+    font-size: 1.3rem;
+  }
+  .main {
+    padding: 16px 12px 0;
+  }
+  .crop-tabs {
+    gap: 4px;
+  }
+  .crop-tab {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+  .card {
+    padding: 14px;
+  }
+  .inputs-grid {
+    padding: 14px;
+  }
+  .profit-big {
+    font-size: 2rem;
+  }
+  .be-badge {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.72rem;
+  }
+  .chart-wrap {
+    height: 220px !important;
+  }
+  table {
+    font-size: 0.7rem;
+  }
+  thead th, tbody td {
+    padding: 6px 8px;
+  }
 }
 
 /* Table */
@@ -366,11 +418,7 @@ input[type=range]::-webkit-slider-thumb {
 .rec-box.warn { border-left-color: var(--amber); }
 .rec-box.bad { border-left-color: var(--red); }
 
-@media (max-width: 900px) {
-  .layout { grid-template-columns: 1fr; }
-  .main { padding: 20px 16px 0; }
-  .header { padding: 20px 16px 16px; }
-}
+
 </style>
 </head>
 <body>
