@@ -446,11 +446,11 @@ input[type=range]::-webkit-slider-thumb {
 
         <div class="input-group slider-group">
           <div class="slider-top">
-            <label>Transport ~100 km (€/t)</label>
-            <span class="slider-cur" id="disp_trans">10</span>
+            <label>Transport (km) · <span id="disp_trans_eur" style="color:var(--accent);font-size:0.7rem">10.70 €/t</span></label>
+            <span class="slider-cur" id="disp_trans">100</span>
           </div>
-          <input type="range" id="inp_trans" min="5" max="30" step="1" value="10">
-          <div class="slider-range"><span>5</span><span>30</span></div>
+          <input type="range" id="inp_trans" min="10" max="300" step="5" value="100">
+          <div class="slider-range"><span>10</span><span>300</span></div>
         </div>
 
         <div class="input-group slider-group">
@@ -657,7 +657,7 @@ function getInputs() {
     fuelL: +document.getElementById('inp_fuel_l').value || 1.0,
     fixed: +document.getElementById('inp_fixed').value || 500,
     dry: +document.getElementById('inp_dry').value || 20,
-    trans: +document.getElementById('inp_trans').value || 10,
+    trans: 0.08 * (+document.getElementById('inp_trans').value || 100) + 2.70,
     support: +document.getElementById('inp_support').value || 0,
   };
 }
@@ -970,7 +970,11 @@ const globalSliders = [
   }},
   {id:'inp_fixed',  disp:'disp_fixed',  fmt: v => v},
   {id:'inp_dry',    disp:'disp_dry',    fmt: v => v},
-  {id:'inp_trans',  disp:'disp_trans',  fmt: v => v},
+  {id:'inp_trans', disp:'disp_trans', fmt: v => v, extra: v => {
+    const eur = (0.08 * +v + 2.70).toFixed(2);
+    const el = document.getElementById('disp_trans_eur');
+    if (el) el.textContent = eur + ' €/t';
+  }},
   {id:'inp_support',disp:'disp_support',fmt: v => v},
 ];
 globalSliders.forEach(({id, disp, fmt, extra}) => {
@@ -988,6 +992,9 @@ globalSliders.forEach(({id, disp, fmt, extra}) => {
 // Initial render
 syncSlider('oder');
 updateFuelHaDisplay();
+// Init transport display
+const transEurEl = document.getElementById('disp_trans_eur');
+if (transEurEl) transEurEl.textContent = (0.08 * 100 + 2.70).toFixed(2) + ' €/t';
 updateAll();
 };
 // If Chart.js already loaded (cached), run immediately
